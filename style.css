@@ -180,28 +180,35 @@ h1, h2, h3 {
 /* --- 1. HERO SECTION (INDEX.HTML) : LE LOGO EN FILIGRANE DANS LA BOX ! --- */
 /* ======================================================= */
 .hero-section {
-    display: flex;
-    align-items: center;
+    /* MODIFICATION CLÉ : Ne plus utiliser Flexbox pour les deux colonnes. */
+    display: block; /* Passe en mode bloc normal */
+    
     padding: 6rem var(--spacing-lg);
     background-color: var(--color-light);
     min-height: 70vh;
     position: relative;
     overflow: hidden;
+    text-align: center; /* Centre le contenu globalement */
 }
 
 /* LA BOX DE CONTENU AVEC LE FILIGRANE À L'INTÉRIEUR */
 .hero-content {
-    flex: 1;
-    max-width: 50%;
+    /* SUPPRIMEZ: flex: 1; */
+    max-width: 800px; /* Largeur maximale pour le centrage */
+    width: 90%; 
+    
+    /* Le secret pour centrer un bloc avec une max-width : */
+    margin: 0 auto; 
+    
     position: relative; 
     z-index: 2;
     padding: var(--spacing-lg); 
-    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
     overflow: hidden;
+    text-align: center;
 }
-
 /* NOUVEAU STYLE DU LOGO EN FILIGRANE (MAXIMAL ET PLUS VISIBLE) */
 .hero-content::before {
     content: '';
