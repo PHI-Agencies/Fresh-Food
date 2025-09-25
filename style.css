@@ -669,26 +669,37 @@ h1, h2, h3 {
     /* General */
     .header {
         flex-direction: column;
-        padding: 1rem;
+        padding: 1rem 0.5rem; /* Réduire le padding général du header */
     }
 
     .logo-image-container {
-        height: 60px; 
         margin-bottom: 0.5rem;
     }
 
     .nav {
         margin-top: 10px;
-        /* CORRECTION CLÉ pour aligner/envelopper les liens sur mobile */
         display: flex; 
         justify-content: center; 
-        flex-wrap: wrap; /* Permet aux liens de passer à la ligne */
+        /* CORRECTION CLÉ : EMPÊCHE L'ENVELOPPEMENT */
+        flex-wrap: nowrap; 
         width: 100%;
+        /* Permet aux liens de prendre juste l'espace nécessaire */
+        min-width: 0; 
+        overflow: hidden; /* Cache si ça déborde vraiment */
     }
     
     .nav-link {
-        margin: 5px 8px; /* Espace ajusté */
-        padding: 0.5rem 0.6rem;
+        /* RÉDUCTION MAXIMALE DE L'ESPACE */
+        font-size: 0.75rem; /* Taille de police très petite */
+        margin: 0 4px; /* Espace horizontal très réduit */
+        padding: 0.4rem 0.5rem; /* Padding réduit */
+        white-space: nowrap; /* Empêche le texte du lien de se couper */
+    }
+
+    /* Le bouton contact doit aussi être réduit */
+    .contact-btn {
+        padding: 0.4rem 0.5rem !important; 
+        font-weight: 600;
     }
     
     .hero-section {
