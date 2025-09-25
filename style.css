@@ -72,14 +72,14 @@ h1, h2, h3 {
 }
 
 .contact-btn {
-    background-color: var(--color-secondary); 
+    
     color: var(--color-dark) !important;
     font-weight: 600;
     padding: 0.5rem 1rem;
 }
 
 .contact-btn:hover {
-    background-color: rgb(247, 177, 46);
+    background-color: var(--color-light);
 }
 
 /* Priorité au style actif, même sur le bouton Contact */
