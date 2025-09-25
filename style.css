@@ -72,7 +72,7 @@ h1, h2, h3 {
 }
 
 .contact-btn {
-    
+    background-color: var(--color-secondary); 
     color: var(--color-dark) !important;
     font-weight: 600;
     padding: 0.5rem 1rem;
@@ -80,6 +80,12 @@ h1, h2, h3 {
 
 .contact-btn:hover {
     background-color: rgb(247, 177, 46);
+}
+
+/* Priorité au style actif, même sur le bouton Contact */
+.nav-link.active {
+    color: var(--color-primary) !important; 
+    background-color: var(--color-light) !important;
 }
 
 /* --- BOUTONS CTA --- */
@@ -149,7 +155,7 @@ h1, h2, h3 {
     background-color: var(--color-primary);
     color: white;
     padding: 3rem var(--spacing-lg);
-    text-align: center;
+    text-align: center; /* S'assure que le texte du titre est centré */
     margin-bottom: var(--spacing-lg);
 }
 
@@ -180,25 +186,23 @@ h1, h2, h3 {
 /* --- 1. HERO SECTION (INDEX.HTML) : LE LOGO EN FILIGRANE DANS LA BOX ! --- */
 /* ======================================================= */
 .hero-section {
-    /* MODIFICATION CLÉ : Ne plus utiliser Flexbox pour les deux colonnes. */
+    /* CORRECTION pour la pleine largeur sur grand écran : */
     display: block; /* Passe en mode bloc normal */
+    padding: 6rem 10rem; /* Padding augmenté pour les grands écrans (Mac) */
     
-    padding: 6rem var(--spacing-lg);
     background-color: var(--color-light);
     min-height: 70vh;
     position: relative;
     overflow: hidden;
-    text-align: center; /* Centre le contenu globalement */
+    text-align: center; 
 }
 
 /* LA BOX DE CONTENU AVEC LE FILIGRANE À L'INTÉRIEUR */
 .hero-content {
-    /* SUPPRIMEZ: flex: 1; */
-    max-width: 800px; /* Largeur maximale pour le centrage */
-    width: 90%; 
-    
-    /* Le secret pour centrer un bloc avec une max-width : */
-    margin: 0 auto; 
+    /* CORRECTION pour la pleine largeur sur grand écran : */
+    max-width: none !important; /* Force la suppression de toute limite de largeur */
+    width: 100%; 
+    margin: 0; /* Retire le centrage pour la pleine largeur */
     
     position: relative; 
     z-index: 2;
@@ -215,15 +219,13 @@ h1, h2, h3 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150%; /* << PLUS GRAND : S'étire davantage dans la box */
+    width: 150%; 
     height: 150%;
     background: url('logo-fresh-food.jpeg') no-repeat center center;
-    background-size: 100%; /* << ENCORE PLUS GRAND : Prend toute la place */
-    opacity: 0.40; /* << TRÈS AUGMENTÉ : Rend le logo beaucoup plus visible */
-    transform: translate(-50%, -50%) rotate(-2deg); /* Rotation réduite pour le centrer */
+    background-size: 100%; 
+    opacity: 0.40; 
+    transform: translate(-50%, -50%) rotate(-2deg); 
     pointer-events: none; 
-    /* Nous enlevons le 'grayscale' pour garder les couleurs originales du logo (Vert/Orange) */
-    /* filter: grayscale(100%) brightness(50%); */ 
     z-index: -1; 
 }
 .hero-title {
@@ -240,22 +242,6 @@ h1, h2, h3 {
     margin-bottom: var(--spacing-md);
     border-left: 5px solid var(--color-secondary);
     padding-left: 15px;
-}
-
-.hero-image-placeholder {
-    flex: 1;
-    height: 400px;
-    background: url('placeholder-cocktail.jpg') center/cover no-repeat; 
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    transform: rotate(2deg);
-    transition: transform 0.5s;
-    position: relative; 
-    z-index: 2;
-}
-
-.hero-image-placeholder:hover {
-    transform: rotate(0deg) scale(1.02);
 }
 
 /* SECTION MISES EN AVANT */
@@ -306,31 +292,59 @@ h1, h2, h3 {
 /* ======================================================= */
 .cocktail-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 2 ou 3 colonnes sur grand écran */
     gap: var(--spacing-md);
     padding: 0 var(--spacing-lg) var(--spacing-lg);
 }
 
-.cocktail-card {
+.cocktail-item-with-photo {
     background-color: var(--color-light);
-    padding: var(--spacing-md);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border-top: 5px solid var(--color-secondary);
+    overflow: hidden; 
     transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; 
+    flex-direction: column; 
 }
 
-.cocktail-card:hover {
+.cocktail-item-with-photo:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.cocktail-card.signature {
-    background-color: #fff;
-    border: 3px solid var(--color-primary);
-    box-shadow: 0 8px 15px rgba(92, 184, 92, 0.2);
+.cocktail-photo {
+    width: 100%;
+    height: 200px; 
+    overflow: hidden;
+    flex-shrink: 0; 
 }
 
+.cocktail-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    display: block;
+}
+
+/* Le style existant du cocktail-card est à conserver, juste quelques ajustements */
+.cocktail-card {
+    flex-grow: 1; 
+    padding: var(--spacing-md);
+    border-top: 5px solid var(--color-secondary); 
+    border-radius: 0 0 10px 10px; 
+    background-color: transparent; 
+    box-shadow: none;
+    transform: none;
+}
+
+/* Ajustements pour la carte signature */
+.cocktail-card.signature {
+    border-top: 5px solid var(--color-primary); 
+    background-color: white; 
+    border-radius: 0 0 10px 10px;
+}
+
+/* Les styles du texte à l'intérieur de la carte restent les mêmes */
 .cocktail-name {
     color: var(--color-dark);
     font-size: 1.5rem;
@@ -352,16 +366,19 @@ h1, h2, h3 {
     font-weight: 600;
     text-transform: uppercase;
 }
+.cocktail-type.signature { /* style pour le type signature */
+    background-color: var(--color-primary);
+    color: white;
+}
 
 /* ======================================================= */
 /* --- 3. SERVICES & PRICING (SERVICES.HTML) --- */
-/* (Styles non modifiés) */
 /* ======================================================= */
 .services-container {
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Centrage des blocs (tableau et conditions) */
 }
 
 .pricing-table {
@@ -662,10 +679,16 @@ h1, h2, h3 {
 
     .nav {
         margin-top: 10px;
+        /* CORRECTION CLÉ pour aligner/envelopper les liens sur mobile */
+        display: flex; 
+        justify-content: center; 
+        flex-wrap: wrap; /* Permet aux liens de passer à la ligne */
+        width: 100%;
     }
     
     .nav-link {
-        margin: 5px 5px;
+        margin: 5px 8px; /* Espace ajusté */
+        padding: 0.5rem 0.6rem;
     }
     
     .hero-section {
@@ -687,13 +710,6 @@ h1, h2, h3 {
         opacity: 0.10;
     }
     
-    .hero-image-placeholder {
-        margin-top: 2rem;
-        width: 100%;
-        height: 300px;
-        transform: none; 
-    }
-
     .highlight-section {
         flex-direction: column;
         padding: 2rem 1rem;
@@ -701,10 +717,137 @@ h1, h2, h3 {
     
     /* Services */
     .pricing-table {
-        overflow-x: auto; 
+        overflow-x: visible; 
+        box-shadow: none; 
     }
+
     .pricing-table table {
-        min-width: 600px; 
+        min-width: auto; 
+        width: 100%;
+        display: block; 
+    }
+
+    .pricing-table thead {
+        display: none;
+    }
+
+    .pricing-table tr {
+        display: block;
+        margin-bottom: 25px; /* Plus d'espace entre les forfaits */
+        border: 1px solid #ddd;
+        border-radius: 12px; /* Coins légèrement plus arrondis */
+        background-color: white !important; 
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Ombre plus visible */
+        overflow: hidden; 
+        transition: transform 0.2s;
+    }
+    
+    .pricing-table tr:hover {
+        transform: translateY(-4px); /* Effet de survol plus marqué */
+    }
+
+    /* Style du Forfait "Complet Fête" (le plus important) */
+    .pricing-table tr.highlight-row {
+        border: 3px solid var(--color-secondary); /* Bordure épaisse Jaune/Orange */
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4); /* Ombre Jaune/Orange */
+    }
+
+    .pricing-table td {
+        display: block;
+        text-align: right; 
+        padding: 15px 18px; /* Padding généreux */
+        border-bottom: 1px dashed #e0e0e0; /* Séparation des détails plus légère */
+        position: relative;
+        padding-left: 110px; /* Espace pour le label */
+        font-size: 1rem;
+    }
+
+    /* Étiquettes de la carte (Détails / Prix) */
+    .pricing-table td::before {
+        content: attr(data-label) ":"; /* Ajout du deux-points pour la clarté */
+        position: absolute;
+        left: 18px;
+        font-weight: 600;
+        color: var(--color-dark); /* Label en noir */
+        text-align: left;
+        width: 80px;
+    }
+    
+    /* 1. Titre du Forfait (Première ligne de la carte) */
+    .pricing-table tr td:first-child {
+        background-color: var(--color-primary); /* Fond Vert VIBRANT */
+        color: white; /* Texte Blanc */
+        font-size: 1.4rem;
+        font-weight: 700;
+        text-align: center;
+        border-bottom: none; /* Pas de ligne de séparation ici */
+        padding: 15px;
+        padding-left: 15px; /* Correction d'alignement */
+    }
+    
+    .pricing-table tr.highlight-row td:first-child {
+        background-color: var(--color-secondary); /* Fond Jaune/Orange pour le forfait star */
+        color: var(--color-dark); /* Texte sombre sur fond clair */
+        border-bottom: 4px solid var(--color-primary); /* Ligne de séparation verte */
+    }
+    /* ENLÈVEMENT DE "RECOMMANDÉ" */
+    .pricing-table tr.highlight-row td:first-child::before {
+        content: none; 
+    }
+
+
+    /* 2. Prix (Dernière ligne de la carte) */
+    .pricing-table tr td:last-child {
+        border-bottom: none;
+        font-size: 1.8rem; /* Prix plus grand et visible */
+        color: var(--color-secondary); /* Prix en Jaune/Orange */
+        font-weight: 800;
+        padding-top: 15px;
+        background-color: #f7f7f7; /* Fond très clair pour le prix */
+    }
+    
+    /* Mise en évidence du prix du forfait star */
+    .pricing-table tr.highlight-row td:last-child {
+        color: var(--color-primary); /* Le prix du forfait star est en Vert */
+    }
+    
+    /* Correction pour le texte en gras dans les détails (remplace les ** par <strong>) */
+    .pricing-table td strong {
+        font-weight: 700; 
+        color: var(--color-primary); /* Vert pour les éléments clés (photographe, glace) */
+    }
+    .pricing-table tr.highlight-row td strong {
+        color: var(--color-dark); /* Noir/sombre pour les détails du forfait star */
+    }
+    .pricing-table tr td:last-child strong {
+         color: inherit;
+         font-weight: inherit;
+    
+
+    /* ... (conservez le reste de votre CSS) ... */
+}
+
+    .page-header {
+        /* Réduire le padding vertical */
+        padding: 2rem 1rem; 
+        margin-bottom: 2rem; /* Augmenter la marge sous l'entête pour séparer du tableau */
+    }
+
+    .page-title {
+        /* Réduire la taille de la police du titre */
+        font-size: 2rem; 
+        margin-bottom: 0.5rem; /* Réduire l'espace sous le titre */
+    }
+
+    .page-subtitle {
+        /* S'assurer que le sous-titre est plus petit et ne chevauche pas */
+        font-size: 1rem; 
+        margin-bottom: 0; 
+    }
+
+    /* SECTION PRINCIPALE (SERVICES) */
+    .services-container {
+        padding: 1rem; /* Réduire le padding de la section pour donner plus d'espace */
     }
     
     /* Formation */
@@ -734,6 +877,11 @@ h1, h2, h3 {
     
     .main-phone-number {
         font-size: 2rem;
+    }
+    
+    .cocktail-grid-container {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        padding: 0 1rem 1rem;
     }
 }
 /* ======================================================= */
@@ -848,98 +996,4 @@ h1, h2, h3 {
 .contact-form-box .cta-button.primary {
     width: 100%;
     margin-right: 0;
-}
-/* ======================================================= */
-/* --- 2. MENU GRID (MENU.HTML) - AVEC PHOTOS --- */
-/* ======================================================= */
-.cocktail-grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 2 ou 3 colonnes sur grand écran */
-    gap: var(--spacing-md);
-    padding: 0 var(--spacing-lg) var(--spacing-lg);
-}
-
-.cocktail-item-with-photo {
-    background-color: var(--color-light);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    overflow: hidden; /* Important pour que l'image ne dépasse pas */
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex; /* Utilise flexbox pour l'image et la carte */
-    flex-direction: column; /* Empile image au-dessus de la carte */
-}
-
-.cocktail-item-with-photo:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.cocktail-photo {
-    width: 100%;
-    height: 200px; /* Hauteur fixe pour toutes les images */
-    overflow: hidden;
-    flex-shrink: 0; /* Empêche l'image de rétrécir */
-}
-
-.cocktail-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Assure que l'image couvre la zone sans déformation */
-    display: block;
-}
-
-/* Le style existant du cocktail-card est à conserver, juste quelques ajustements */
-.cocktail-card {
-    flex-grow: 1; /* Permet à la carte de prendre l'espace restant */
-    padding: var(--spacing-md);
-    border-top: 5px solid var(--color-secondary); /* Garde la bordure en haut de la description */
-    border-radius: 0 0 10px 10px; /* Coins arrondis seulement en bas */
-    /* Retirer les styles de shadow/transform/background-color ici car ils sont sur le .cocktail-item-with-photo */
-    background-color: transparent; 
-    box-shadow: none;
-    transform: none;
-}
-
-/* Ajustements pour la carte signature */
-.cocktail-card.signature {
-    border-top: 5px solid var(--color-primary); /* Bordure signature au-dessus de l'image */
-    background-color: white; /* Fond blanc si nécessaire pour la carte signature */
-    border-radius: 0 0 10px 10px;
-}
-
-/* Les styles du texte à l'intérieur de la carte restent les mêmes */
-.cocktail-name {
-    color: var(--color-dark);
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.cocktail-description {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-}
-
-.cocktail-type {
-    display: inline-block;
-    background-color: var(--color-secondary);
-    color: var(--color-dark);
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 50px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.cocktail-type.signature { /* style pour le type signature */
-    background-color: var(--color-primary);
-    color: white;
-}
-
-/* Responsive pour Mobile */
-@media (max-width: 768px) {
-    /* ... (les autres styles responsives existants) ... */
-
-    .cocktail-grid-container {
-        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
-        padding: 0 1rem 1rem;
-    }
 }
