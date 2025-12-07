@@ -1009,3 +1009,18 @@ h1, h2, h3 {
     width: 100%;
     margin-right: 0;
 }
+.affiche-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.affiche-container {
+    margin-top: 20px;
+}
+
+.affiche-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
